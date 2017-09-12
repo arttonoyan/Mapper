@@ -4,24 +4,28 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Artnix.Mapper.Builders.Helpers;
+using Artnix.Mapper.Providers;
 
 namespace Artnix.Mapper.Builders
 {
-    public class ModelTypeBuilder<TModel1, TModel2>
-        where TModel1 : class, new()
-        where TModel2 : class, new()
+    public class ModelTypeBuilder
     {
-        private ModelTypeConfigurationBuilder _configBuilder;
+        internal Action ConfigurationFinish;
 
-        public IModelTypeConfigurationBuilder<TModel1, TModel2> CreateMap()
+        public IModelTypeConfigurationBuilder<TModel1, TModel2> CreateMap<TModel1, TModel2>()
+            where TModel1 : class
+            where TModel2 : class, new()
         {
-            _configBuilder = new ModelTypeConfigurationBuilder();
-            return _configBuilder;
+            var builder = new ModelTypeConfigurationBuilder<TModel1, TModel2>(this);
+            ConfigurationFinish += builder.Finish;
+            return builder;
         }
 
-        internal Expression<Func<TModel1, TModel2>> Finish()
+        internal void Finish<TModel1, TModel2>(Dictionary<string, MemberBinding> bindingsDic)
+            where TModel1 : class
+            where TModel2 : class, new()
         {
-            Dictionary<string, MemberBinding> bindings = _configBuilder.Finish();
+            Dictionary<string, MemberBinding> bindings = bindingsDic;
 
             Type model2Type = typeof(TModel2);
             Type model1Type = typeof(TModel1);
@@ -65,34 +69,9 @@ namespace Artnix.Mapper.Builders
             NewExpression model = Expression.New(model2Type);
             MemberInitExpression memberInitExpression = Expression.MemberInit(model, bindings.Values);
 
-            var exprBody = (MemberInitExpression) ExpressionVisitorFactory.AllParametersReplacer(parameter).Visit(memberInitExpression);
-            return Expression.Lambda<Func<TModel1, TModel2>>(exprBody, parameter);
-        }
-
-        private class ModelTypeConfigurationBuilder : IModelTypeConfigurationBuilder<TModel1, TModel2>
-        {
-            // The key is model2 member name.
-            private readonly Dictionary<string, MemberBinding> _memberBindings;
-
-            public ModelTypeConfigurationBuilder()
-            {
-                _memberBindings = new Dictionary<string, MemberBinding>();
-            }
-
-            public IModelTypeConfigurationBuilder<TModel1, TModel2> Property<TProperty>(Expression<Func<TModel2, TProperty>> model2Property, Expression<Func<TModel1, TProperty>> model1Property)
-            {
-                MemberExpression memberExp1 = model2Property.Body as MemberExpression;
-                if (memberExp1 == null)
-                    return this;
-                _memberBindings.Add(memberExp1.Member.Name, Expression.Bind(memberExp1.Member, model1Property.Body));
-
-                return this;
-            }
-
-            internal Dictionary<string, MemberBinding> Finish()
-            {
-                return _memberBindings;
-            }
+            var exprBody = (MemberInitExpression)ExpressionVisitorFactory.AllParametersReplacer(parameter).Visit(memberInitExpression);
+            var lambda = Expression.Lambda<Func<TModel1, TModel2>>(exprBody, parameter);
+            CasheProvider<TModel1, TModel2>.SetMapper(lambda);
         }
     }
 }
