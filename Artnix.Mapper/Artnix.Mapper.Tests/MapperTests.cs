@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Artnix.Mapper.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Artnix.Mapper.Tests
@@ -9,16 +13,13 @@ namespace Artnix.Mapper.Tests
         {
             DataBase.Init();
 
-            Mapper.MapConfiguration<Mock.Models.StudentModelMock, Mock.MapModels.Base.StudentModelMock>(cfg =>
+            Mapper.MapConfiguration(cfg =>
             {
-                cfg.CreateMap()
+                cfg.CreateMap<Mock.Models.StudentModelMock, Mock.MapModels.Base.StudentModelMock>()
                     .Property(wm => wm.CityName, m => m.CityModel.Name)
                     .Property(wm => wm.Fullname, m => $"{m.Family} {m.Name}");
-            });
 
-            Mapper.MapConfiguration<Mock.Models.StudentModelMock, Mock.MapModels.Nullable.StudentModelMock>(cfg =>
-            {
-                cfg.CreateMap()
+                cfg.CreateMap<Mock.Models.StudentModelMock, Mock.MapModels.Nullable.StudentModelMock>()
                     .Property(wm => wm.CityName, m => m.CityModel.Name)
                     .Property(wm => wm.Fullname, m => $"{m.Family} {m.Name}");
             });
@@ -27,8 +28,7 @@ namespace Artnix.Mapper.Tests
         [TestMethod]
         public void TestMethodToViewModel()
         {
-            var st = DataBase.Students[0];
-            //Mapper.Convert<Mock.Models.StudentModelMock, Mock.MapModels.Base.StudentModelMock>()
+            
         }
     }
 }

@@ -6,7 +6,7 @@ using Artnix.Mapper.Tests.Mock.Models;
 
 namespace Artnix.Mapper.Tests
 {
-    public static class DataBase
+    internal static class DataBase
     {
         static DataBase()
         {
