@@ -8,9 +8,9 @@ namespace Artnix.Mapper.Builders.Helpers
 
         protected override Expression VisitParameter(ParameterExpression node)
         {
-            //if (node.Name == _parameter.Name)
-            //    return base.VisitParameter(_parameter);
-            return base.VisitParameter(_parameter);
+            if (node.Type == _parameter.Type)
+                return base.VisitParameter(_parameter);
+            return base.VisitParameter(node);
         }
 
         internal ParameterReplacer(ParameterExpression parameter)

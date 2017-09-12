@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Artnix.Mapper.Extensions
@@ -19,6 +20,11 @@ namespace Artnix.Mapper.Extensions
         {
             var Converter = Mapper.Converter<TModel1, TModel2>();
             return source.ToDictionary(p => p.Key, p => Converter(p.Value));
+        }
+
+        public static TProperty IfNotNull<TModel, TProperty>(this TModel model, Func<TModel, TProperty> predicate) where TModel : class
+        {
+            return model == null ? default(TProperty) : predicate(model);
         }
     }
 }
