@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Linq.Expressions;
 using Artnix.Mapper.Builders;
 using Artnix.Mapper.Extensions;
 using Artnix.Mapper.Providers;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Artnix.Mapper.Extensions;
 
 namespace Artnix.Mapper.Builders
 {
@@ -8,16 +9,17 @@ namespace Artnix.Mapper.Builders
         where TModel1 : class
         where TModel2 : class, new()
     {
-        private readonly ModelTypeBuilder _modelTypeBuilder;
-
         public ModelTypeConfigurationBuilder(ModelTypeBuilder modelTypeBuilder)
         {
             _modelTypeBuilder = modelTypeBuilder;
             _memberBindings = new Dictionary<string, MemberBinding>();
+            _ignoreMembers = new HashSet<string>();
         }
 
         // The key is model2 member name.
         private readonly Dictionary<string, MemberBinding> _memberBindings;
+        private readonly ModelTypeBuilder _modelTypeBuilder;
+        private readonly HashSet<string> _ignoreMembers;
 
         public IModelTypeConfigurationBuilder<TModel1, TModel2> Property<TProperty>(Expression<Func<TModel2, TProperty>> model2Property, Expression<Func<TModel1, TProperty>> model1Property)
         {
@@ -31,7 +33,26 @@ namespace Artnix.Mapper.Builders
 
         internal void Finish()
         {
-            _modelTypeBuilder.Finish<TModel1, TModel2>(_memberBindings);
+            _modelTypeBuilder.Finish<TModel1, TModel2>(_memberBindings, _ignoreMembers);
+        }
+
+        public IModelTypeConfigurationBuilder<TModel1, TModel2> Ignore(params string[] members)
+        {
+            return Ignore((IEnumerable<string>)members);
+        }
+
+        public IModelTypeConfigurationBuilder<TModel1, TModel2> Ignore(IEnumerable<string> members)
+        {
+            _ignoreMembers.AddRange(members);
+            return this;
+        }
+
+        public IModelTypeConfigurationBuilder<TModel1, TModel2> Ignore(Expression<Func<TModel2, object>> expression)
+        {
+            string name = expression.GetParameterName();
+            if (!string.IsNullOrEmpty(name))
+                _ignoreMembers.Add(name);
+            return this;
         }
     }
 }

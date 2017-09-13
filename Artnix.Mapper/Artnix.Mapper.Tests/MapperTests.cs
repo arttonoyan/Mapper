@@ -12,12 +12,14 @@ namespace Artnix.Mapper.Tests
         public MapperTests()
         {
             DataBase.Init();
-
             Mapper.MapConfiguration(cfg =>
             {
                 cfg.CreateMap<Mock.Models.StudentModelMock, Mock.MapModels.Base.StudentModelMock>()
-                // You can use "IfNotNull" extensions.
-                .Property(wm => wm.CityName, m => m.CityModel.IfNotNull(p => p.Name))
+                    .Ignore(nameof(Mock.MapModels.Base.StudentModelMock.Fullname))
+                    .Ignore(m => m.CityName)
+
+                     // You can use "IfNotNull" extensions.
+                    .Property(wm => wm.CityName, m => m.CityModel.IfNotNull(p => p.Name))
                     .Property(wm => wm.Fullname, m => $"{m.Family} {m.Name}");
 
                 cfg.CreateMap<Mock.Models.StudentModelMock, Mock.MapModels.Nullable.StudentModelMock>()

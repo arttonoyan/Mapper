@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Artnix.Mapper.Builders.Helpers;
+using Artnix.Mapper.Extensions;
 using Artnix.Mapper.Providers;
 
 namespace Artnix.Mapper.Builders
@@ -21,19 +22,18 @@ namespace Artnix.Mapper.Builders
             return builder;
         }
 
-        internal void Finish<TModel1, TModel2>(Dictionary<string, MemberBinding> bindingsDic)
+        internal void Finish<TModel1, TModel2>(Dictionary<string, MemberBinding> bindings, HashSet<string> ignoreMembers)
             where TModel1 : class
             where TModel2 : class, new()
         {
-            Dictionary<string, MemberBinding> bindings = bindingsDic;
-
             Type model2Type = typeof(TModel2);
             Type model1Type = typeof(TModel1);
-
+            
             Dictionary<string, PropertyInfo> model1PiDic = model1Type.GetProperties().ToDictionary(pi => pi.Name, pi => pi);
-            IEnumerable<PropertyInfo> model2Pis = model2Type.GetProperties().Where(pi => !bindings.ContainsKey(pi.Name) && model1PiDic.ContainsKey(pi.Name));
+            IEnumerable<PropertyInfo> model2Pis = model2Type.GetProperties().Where(pi => !bindings.ContainsKey(pi.Name) && !ignoreMembers.Contains(pi.Name) && model1PiDic.ContainsKey(pi.Name));
+            bindings.RemoveAllIfContains(ignoreMembers);
 
-            var parameter = Expression.Parameter(typeof(TModel1), "model");
+            var parameter = Expression.Parameter(model1Type, "model");
             foreach (PropertyInfo member in model2Pis)
             {
                 var memberExp = Expression.MakeMemberAccess(parameter, model1PiDic[member.Name]);
