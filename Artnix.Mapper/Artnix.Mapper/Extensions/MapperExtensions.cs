@@ -2,7 +2,7 @@
 using System.Data;
 using System.Linq;
 
-namespace Artnix.Mapper.Extensions
+namespace Artnix.MapperFramework.Extensions
 {
     public static class MapperExtensions
     {

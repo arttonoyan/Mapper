@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Artnix.Mapper.Extensions
+namespace Artnix.MapperFramework.Extensions
 {
     public static class CommonExtensions
     {

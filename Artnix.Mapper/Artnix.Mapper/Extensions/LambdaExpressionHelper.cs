@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace Artnix.Mapper.Extensions
+namespace Artnix.MapperFramework.Extensions
 {
     internal static class LambdaExpressionHelper
     {

@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Artnix.Mapper\Artnix.Mapper.csproj" />
+    <ProjectReference Include="..\Artnix.Mapper\Artnix.MapperFramework.csproj" />
   </ItemGroup>
 
 </Project>

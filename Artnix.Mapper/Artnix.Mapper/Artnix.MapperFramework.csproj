@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Company>ARTNIX LLC</Company>
+    <Product>Artnix.Mapper</Product>
+    <Description>A convention object to object or DataReader to object mapper in .NET.</Description>
+    <Copyright>@ 2017 ARTNIX LLC</Copyright>
+    <Authors>Artnix</Authors>
+    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/arttonoyan/Mapper</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/arttonoyan/Mapper</RepositoryUrl>
+    <PackageTags>Mapping DataReader Expression</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageId>Artnix.MapperFramework</PackageId>
+    <RootNamespace>Artnix.MapperFramework</RootNamespace>
+    <AssemblyName>Artnix.MapperFramework</AssemblyName>
+  </PropertyGroup>
+
+</Project>

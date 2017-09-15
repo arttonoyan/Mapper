@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.8
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artnix.Mapper", "Artnix.Mapper\Artnix.Mapper.csproj", "{DF5B699F-9444-4AEF-A614-05120981F869}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Artnix.MapperFramework", "Artnix.Mapper\Artnix.MapperFramework.csproj", "{DF5B699F-9444-4AEF-A614-05120981F869}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Artnix.Mapper.Tests", "Artnix.Mapper.Tests\Artnix.Mapper.Tests.csproj", "{1B615269-422B-4767-A392-EE90349A1C8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Artnix.MapperFramework.Tests", "Artnix.Mapper.Tests\Artnix.MapperFramework.Tests.csproj", "{1B615269-422B-4767-A392-EE90349A1C8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

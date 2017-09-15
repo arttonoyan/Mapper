@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Artnix.Mapper.Builders
+namespace Artnix.MapperFramework.Builders
 {
     public interface IModelTypeConfigurationBuilder<TModel1, TModel2>
         where TModel1 : class

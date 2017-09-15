@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Artnix.Mapper.Tests.Mock.Models
+namespace Artnix.MapperFramework.Tests.Mock.Models
 {
     public class CityModelMock
     {

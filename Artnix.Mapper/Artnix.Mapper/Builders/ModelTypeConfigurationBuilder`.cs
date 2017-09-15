@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Artnix.Mapper.Extensions;
+using Artnix.MapperFramework.Extensions;
 
-namespace Artnix.Mapper.Builders
+namespace Artnix.MapperFramework.Builders
 {
     internal class ModelTypeConfigurationBuilder<TModel1, TModel2> : IModelTypeConfigurationBuilder<TModel1, TModel2>
         where TModel1 : class

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Artnix.Mapper.Builders.Helpers
+namespace Artnix.MapperFramework.Builders.Helpers
 {
     public static class ExpressionVisitorFactory
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Data;
-using Artnix.Mapper.Builders;
-using Artnix.Mapper.Extensions;
-using Artnix.Mapper.Providers;
+using Artnix.MapperFramework.Extensions;
+using Artnix.MapperFramework.Builders;
+using Artnix.MapperFramework.Providers;
 
-namespace Artnix.Mapper
+namespace Artnix.MapperFramework
 {
     public static class Mapper
     {

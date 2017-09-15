@@ -2,7 +2,7 @@
 using System.Data;
 using System.Linq.Expressions;
 
-namespace Artnix.Mapper.Providers
+namespace Artnix.MapperFramework.Providers
 {
     internal static class CasheProvider<TModel1, TModel2>
         where TModel1 : class

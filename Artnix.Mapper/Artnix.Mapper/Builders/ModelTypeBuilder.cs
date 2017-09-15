@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Artnix.Mapper.Builders.Helpers;
-using Artnix.Mapper.Extensions;
-using Artnix.Mapper.Providers;
+using Artnix.MapperFramework.Extensions;
+using Artnix.MapperFramework.Builders.Helpers;
+using Artnix.MapperFramework.Providers;
 
-namespace Artnix.Mapper.Builders
+namespace Artnix.MapperFramework.Builders
 {
     public class ModelTypeBuilder
     {
@@ -69,7 +69,7 @@ namespace Artnix.Mapper.Builders
             NewExpression model = Expression.New(model2Type);
             MemberInitExpression memberInitExpression = Expression.MemberInit(model, bindings.Values);
 
-            var exprBody = (MemberInitExpression)ExpressionVisitorFactory.AllParametersReplacer(parameter).Visit(memberInitExpression);
+            var exprBody = ExpressionVisitorFactory.AllParametersReplacer(parameter).Visit(memberInitExpression);
             var lambda = Expression.Lambda<Func<TModel1, TModel2>>(exprBody, parameter);
             CasheProvider<TModel1, TModel2>.SetMapper(lambda);
         }

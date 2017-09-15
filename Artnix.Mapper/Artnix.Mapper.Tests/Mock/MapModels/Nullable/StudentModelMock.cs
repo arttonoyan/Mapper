@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Artnix.Mapper.Tests.Mock.MapModels.Nullable
+namespace Artnix.MapperFramework.Tests.Mock.MapModels.Nullable
 {
     public class StudentModelMock
     {

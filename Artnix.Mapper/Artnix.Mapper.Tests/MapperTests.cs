@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Artnix.Mapper.Extensions;
+using Artnix.MapperFramework.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Artnix.Mapper.Tests
+namespace Artnix.MapperFramework.Tests
 {
     [TestClass]
     public class MapperTests

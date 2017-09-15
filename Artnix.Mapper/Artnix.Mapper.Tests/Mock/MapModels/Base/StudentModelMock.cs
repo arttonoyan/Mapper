@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Artnix.Mapper.Tests.Mock.MapModels.Base
+namespace Artnix.MapperFramework.Tests.Mock.MapModels.Base
 {
     public class StudentModelMock
     {

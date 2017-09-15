@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Artnix.Mapper.Tests.Mock.Models;
+using Artnix.MapperFramework.Tests.Mock.Models;
 
-namespace Artnix.Mapper.Tests
+namespace Artnix.MapperFramework.Tests
 {
     internal static class DataBase
     {

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Artnix.Mapper.Builders.Helpers
+namespace Artnix.MapperFramework.Builders.Helpers
 {
     internal class ParameterReplacer : ExpressionVisitor
     {

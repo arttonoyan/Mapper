@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Artnix.Mapper
+namespace Artnix.MapperFramework
 {
     [DebuggerStepThrough]
     public static class Check
