@@ -1,11 +1,8 @@
-# Mapper
-.Net Core 2.0
-
 # Features
 MapperFramework is a <a href="https://www.nuget.org/packages/Artnix.MapperFramework/">NuGet library</a> that you can add in to your project.
 
 ## How do I get started?
-
+First, configure MapperFramework to know what types you want to map, in the startup of your application:
 ```
 Mapper.MapConfiguration(cfg =>
             {
@@ -26,3 +23,7 @@ Mapper.MapConfiguration(cfg =>
                     .Ignore(m => m.CityName)
             });
 ```
+Then in your application code, execute the mappings:
+```
+ var dtoModel = Mapper.Convert<Dto.StudentModel>(student);
+ ```
