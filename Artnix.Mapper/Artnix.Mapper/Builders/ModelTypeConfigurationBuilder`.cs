@@ -33,7 +33,7 @@ namespace Artnix.MapperFramework.Builders
 
         internal void Finish()
         {
-            _modelTypeBuilder.Finish<TModel1, TModel2>(_memberBindings, _ignoreMembers);
+            _modelTypeBuilder.FinishMap<TModel1, TModel2>(_memberBindings, _ignoreMembers);
         }
 
         public IModelTypeConfigurationBuilder<TModel1, TModel2> Ignore(params string[] members)
@@ -49,7 +49,7 @@ namespace Artnix.MapperFramework.Builders
 
         public IModelTypeConfigurationBuilder<TModel1, TModel2> Ignore(Expression<Func<TModel2, object>> expression)
         {
-            string name = expression.GetParameterName();
+            string name = expression.GetMemberName();
             if (!string.IsNullOrEmpty(name))
                 _ignoreMembers.Add(name);
             return this;

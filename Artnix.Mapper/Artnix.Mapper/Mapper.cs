@@ -38,13 +38,7 @@ namespace Artnix.MapperFramework
         public static Func<IDataRecord, TModel> Converter<TModel>(IDataRecord reader)
             where TModel : class, new()
         {
-            var converter = CasheProvider<TModel, TModel>.GetIDataRecordToModelMapper();
-            if (converter != null)
-                return converter;
-
-            CasheProvider<TModel, TModel>.SetMapper(reader.Map<TModel>());
-            converter = CasheProvider<TModel, TModel>.GetIDataRecordToModelMapper();
-            return converter;
+            return CasheDataReaderProvider<TModel>.GetOrCreateDataReaderToModelMapper(reader);
         }
     }
 }

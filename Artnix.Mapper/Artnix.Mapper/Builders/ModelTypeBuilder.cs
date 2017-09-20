@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Artnix.MapperFramework.Extensions;
 using Artnix.MapperFramework.Builders.Helpers;
+using Artnix.MapperFramework.Builders.Interfaces;
 using Artnix.MapperFramework.Providers;
 
 namespace Artnix.MapperFramework.Builders
@@ -22,13 +23,31 @@ namespace Artnix.MapperFramework.Builders
             return builder;
         }
 
-        internal void Finish<TModel1, TModel2>(Dictionary<string, MemberBinding> bindings, HashSet<string> ignoreMembers)
+        public IDataReaderBuilder<TModel> CreateDataReaderMap<TModel>()
+            where TModel : class, new()
+        {
+            var builder = new DataReaderBuilder<TModel>(this);
+            ConfigurationFinish += builder.Finish;
+            return builder;
+        }
+
+        internal void FinishDataReaderMap<TModel>(IReadOnlyDictionary<string, string> bindings, bool useCodingStandartNames)
+            where TModel : class, new()
+        {
+            if (bindings != null)
+                CasheDataReaderProvider<TModel>.SetBindings(bindings);
+
+            if(useCodingStandartNames)
+                CasheDataReaderProvider<TModel>.UseCodingStandartNames(useCodingStandartNames);
+        }
+
+        internal void FinishMap<TModel1, TModel2>(Dictionary<string, MemberBinding> bindings, HashSet<string> ignoreMembers)
             where TModel1 : class
             where TModel2 : class, new()
         {
             Type model2Type = typeof(TModel2);
             Type model1Type = typeof(TModel1);
-            
+
             Dictionary<string, PropertyInfo> model1PiDic = model1Type.GetProperties().ToDictionary(pi => pi.Name, pi => pi);
             IEnumerable<PropertyInfo> model2Pis = model2Type.GetProperties().Where(pi => !bindings.ContainsKey(pi.Name) && !ignoreMembers.Contains(pi.Name) && model1PiDic.ContainsKey(pi.Name));
             bindings.RemoveAllIfContains(ignoreMembers);
