@@ -15,26 +15,26 @@ namespace Artnix.MapperFramework.Tests
             OnCreateStudentss(count);
         }
 
-        public static List<StudentModelMock> Students { get; private set; }
+        public static List<StudentModel> Students { get; private set; }
 
-        public static List<CityModelMock> Cities { get; private set; }
+        public static List<CityModel> Cities { get; private set; }
 
         public static void Init() { }
 
         private static void OnCreateStudentss(int count)
         {
-            Students = new List<StudentModelMock>(count);
+            Students = new List<StudentModel>(count);
             var rnd = new Random();
             int percent = 2 + (count * 10 / 100);
             for (int i = 1; i <= count; i++)
             {
                 string name = "Name" + i;
                 int? cityId = GetNullableId(rnd, percent, 1, 100);
-                CityModelMock cityModel = null;
+                CityModel cityModel = null;
                 if (cityId != null)
                     cityModel = Cities.FirstOrDefault(p => p.Id == cityId);
 
-                var item = new StudentModelMock
+                var item = new StudentModel
                 {
                     Id = i,
                     Name = name,
@@ -51,12 +51,12 @@ namespace Artnix.MapperFramework.Tests
 
         private static void OnCreateCities(int count)
         {
-            Cities = new List<CityModelMock>(count);
+            Cities = new List<CityModel>(count);
             var rnd = new Random();
             int percent = 2 + (count * 10 / 100);
             for (int i = 1; i <= count; i++)
             {
-                var item = new CityModelMock
+                var item = new CityModel
                 {
                     Id = i,
                     Name = "Name" + i,

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Artnix.MapperFramework.Tests.Mock.MapModels.Nullable
+namespace Artnix.MapperFramework.Tests.Mock.DTO
 {
-    public class StudentModelMock
+    public class StudentModelNullable
     {
         public int Id { get; set; }
         public int? City { get; set; }

@@ -2,7 +2,7 @@
 
 namespace Artnix.MapperFramework.Tests.Mock.Models
 {
-    public class CityModelMock
+    public class CityModel
     {
         public int Id { get; set; }
         public DateTime? CreateDate { get; set; }

@@ -2,7 +2,7 @@
 
 namespace Artnix.MapperFramework.Tests.Mock.Models
 {
-    public class StudentModelMock
+    public class StudentModel
     {
         public int Id { get; set; }
         public int? City { get; set; }
@@ -12,6 +12,6 @@ namespace Artnix.MapperFramework.Tests.Mock.Models
         public string Name { get; set; }
         public string Family { get; set; }
 
-        public CityModelMock CityModel { get; set; }
+        public CityModel CityModel { get; set; }
     }
 }
