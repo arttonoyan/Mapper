@@ -11,7 +11,7 @@ namespace Artnix.MapperFramework.Builders
         where TModel : class, new()
     {
         private readonly ModelTypeBuilder _modelTypeBuilder;
-        private bool _useCodingStandardNames;
+        private bool _useStandardCodeStyleForMembers;
 
         public DataReaderBuilder(ModelTypeBuilder modelTypeBuilder)
         {
@@ -20,9 +20,9 @@ namespace Artnix.MapperFramework.Builders
         }
 
         private readonly IDictionary<string, string> _memberBindings;
-        public IDataReaderBuilder<TModel> UseCodingStandardNames()
+        public IDataReaderBuilder<TModel> UseStandardCodeStyleForMembers()
         {
-            _useCodingStandardNames = true;
+            _useStandardCodeStyleForMembers = true;
             return this;
         }
 
@@ -40,7 +40,7 @@ namespace Artnix.MapperFramework.Builders
         {
             _modelTypeBuilder.FinishDataReaderMap<TModel>(_memberBindings.IsNullOrEmpty()
                 ? null
-                : new ReadOnlyDictionary<string, string>(_memberBindings), _useCodingStandardNames);
+                : new ReadOnlyDictionary<string, string>(_memberBindings), _useStandardCodeStyleForMembers);
         }
     }
 }

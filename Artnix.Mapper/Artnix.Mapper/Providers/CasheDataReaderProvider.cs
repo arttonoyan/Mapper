@@ -12,7 +12,7 @@ namespace Artnix.MapperFramework.Providers
     {
         private static Func<IDataRecord, TModel> _funcIDataRecordMapper;
         private static IReadOnlyDictionary<string, string> _bindings;
-        private static bool _useCodingStandartNames;
+        private static bool _useStandardCodeStyleForMembers;
 
         public static void SetBindings(IReadOnlyDictionary<string, string> bindings)
         {
@@ -24,13 +24,13 @@ namespace Artnix.MapperFramework.Providers
             if (_funcIDataRecordMapper != null)
                 return _funcIDataRecordMapper;
 
-            _funcIDataRecordMapper = reader.Map<TModel>(_bindings, _useCodingStandartNames).Compile();
+            _funcIDataRecordMapper = reader.Map<TModel>(_bindings, _useStandardCodeStyleForMembers).Compile();
             return _funcIDataRecordMapper;
         }
 
-        internal static void UseCodingStandartNames(bool useCodingStandartNames)
+        internal static void UseStandardCodeStyleForMembers(bool useMode)
         {
-            _useCodingStandartNames = useCodingStandartNames;
+            _useStandardCodeStyleForMembers = useMode;
         }
     }
 }
