@@ -19,7 +19,8 @@ Yoc can use "Ignore" functions:
 Mapper.MapConfiguration(cfg =>
             {
                 cfg.CreateMap<StudentModel, Dto.StudentModel>()
-                    .Ignore(nameof(Mock.MapModels.Base.StudentModelMock.Fullname))
+                    .Ignore(nameof(Mock.MapModels.Base.StudentModelMock.CityName))
+                    // Or You can use this style.
                     .Ignore(m => m.CityName)
             });
 ```
