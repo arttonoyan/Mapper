@@ -4,9 +4,9 @@ namespace Artnix.MapperFramework.Builders.Helpers
 {
     public static class ExpressionVisitorFactory
     {
-        public static ExpressionVisitor AllParametersReplacer(ParameterExpression parameter)
+        public static ExpressionVisitor AllParametersReplacer(params ParameterExpression[] parameters)
         {
-            return new ParameterReplacer(parameter);
+            return new ParameterReplacer(parameters);
         }
     }
 }

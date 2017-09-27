@@ -31,9 +31,14 @@ namespace Artnix.MapperFramework.Builders
             return this;
         }
 
-        internal void Finish()
+        internal void FinishMap()
         {
             _modelTypeBuilder.FinishMap<TModel1, TModel2>(_memberBindings, _ignoreMembers);
+        }
+
+        internal void FinishMergeMap()
+        {
+            _modelTypeBuilder.FinishMergeMap<TModel1, TModel2>(_memberBindings, _ignoreMembers);
         }
 
         public IModelTypeConfigurationBuilder<TModel1, TModel2> Ignore(params string[] members)

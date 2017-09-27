@@ -19,7 +19,16 @@ namespace Artnix.MapperFramework.Builders
             where TModel2 : class, new()
         {
             var builder = new ModelTypeConfigurationBuilder<TModel1, TModel2>(this);
-            ConfigurationFinish += builder.Finish;
+            ConfigurationFinish += builder.FinishMap;
+            return builder;
+        }
+
+        public IModelTypeConfigurationBuilder<TModel1, TModel2> CreateMergeMap<TModel1, TModel2>()
+            where TModel1 : class
+            where TModel2 : class, new()
+        {
+            var builder = new ModelTypeConfigurationBuilder<TModel1, TModel2>(this);
+            ConfigurationFinish += builder.FinishMergeMap;
             return builder;
         }
 
@@ -39,6 +48,30 @@ namespace Artnix.MapperFramework.Builders
 
             if(useStandardCodeStyleForMembers)
                 CasheDataReaderProvider<TModel>.UseStandardCodeStyleForMembers(true);
+        }
+
+        internal void FinishMergeMap<TModel1, TModel2>(Dictionary<string, MemberBinding> bindings, HashSet<string> ignoreMembers)
+            where TModel1 : class
+            where TModel2 : class, new()
+        {
+            Type model1Type = typeof(TModel2);
+            Type model2Type = typeof(TModel1);
+
+            var parameter1 = Expression.Parameter(model1Type, "model1");
+            var parameter2 = Expression.Parameter(model2Type, "model2");
+            
+            foreach (var member in model1Type.GetProperties().Where(pi => !bindings.ContainsKey(pi.Name)))
+            {
+                var memberExp = Expression.MakeMemberAccess(parameter1, member);
+                bindings.Add(member.Name, Expression.Bind(member, memberExp));
+            }
+
+            NewExpression model = Expression.New(model1Type);
+            MemberInitExpression memberInitExpression = Expression.MemberInit(model, bindings.Values);
+
+            var exprBody = ExpressionVisitorFactory.AllParametersReplacer(parameter1, parameter2).Visit(memberInitExpression);
+            var lambda = Expression.Lambda<Func<TModel1, TModel2, TModel2>>(exprBody, parameter2, parameter1);
+            CasheProvider<TModel1, TModel2>.SetMapper(lambda);
         }
 
         internal void FinishMap<TModel1, TModel2>(Dictionary<string, MemberBinding> bindings, HashSet<string> ignoreMembers)
@@ -84,7 +117,7 @@ namespace Artnix.MapperFramework.Builders
                     }
                 }
             }
-
+            
             NewExpression model = Expression.New(model2Type);
             MemberInitExpression memberInitExpression = Expression.MemberInit(model, bindings.Values);
 

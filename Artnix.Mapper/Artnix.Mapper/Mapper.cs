@@ -34,6 +34,18 @@ namespace Artnix.MapperFramework
             return CasheProvider<TModel1, TModel2>.GetModelToModelMapper();
         }
 
+        public static Func<TModel1, TModel2, TModel2> Mergeer<TModel1, TModel2>()
+            where TModel1 : class
+            where TModel2 : class, new()
+        {
+            Func<TModel1, TModel2, TModel2> mergeer = CasheProvider<TModel1, TModel2>.GetModelToModelMergeMapper();
+            if (mergeer != null)
+                return mergeer;
+
+            MapConfiguration(cfg => cfg.CreateMap<TModel1, TModel2>());
+            return CasheProvider<TModel1, TModel2>.GetModelToModelMergeMapper();
+        }
+
         public static Func<IDataRecord, TModel> Converter<TModel>(IDataRecord reader)
             where TModel : class, new()
         {
