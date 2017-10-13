@@ -40,13 +40,16 @@ namespace Artnix.MapperFramework.Builders
             return builder;
         }
 
-        internal void FinishDataReaderMap<TModel>(IReadOnlyDictionary<string, string> bindings, bool useStandardCodeStyleForMembers)
+        internal void FinishDataReaderMap<TModel>(IDictionary<string, string> bindings, HashSet<string> ignoreMembers, bool useStandardCodeStyleForMembers)
             where TModel : class, new()
         {
-            if (bindings != null)
-                CasheDataReaderProvider<TModel>.SetBindings(bindings);
+            if (!bindings.IsNullOrEmpty())
+                CasheDataReaderProvider<TModel>.SetBindingsConfiguration(bindings);
 
-            if(useStandardCodeStyleForMembers)
+            if (!ignoreMembers.IsNullOrEmpty())
+                CasheDataReaderProvider<TModel>.SetBindingsConfiguration(ignoreMembers);
+
+            if (useStandardCodeStyleForMembers)
                 CasheDataReaderProvider<TModel>.UseStandardCodeStyleForMembers(true);
         }
 

@@ -9,6 +9,7 @@ namespace Artnix.MapperFramework.Builders
         where TModel2 : class, new()
     {
         IModelTypeConfigurationBuilder<TModel1, TModel2> Property<TProperty>(Expression<Func<TModel2, TProperty>> model2Property, Expression<Func<TModel1, TProperty>> model1Property);
+        IPropertyConfigurationBuilder<TPropertyModel, TModel2> IfIsNotNull<TPropertyModel>(Expression<Func<TModel1, TPropertyModel>> modelProperty) where TPropertyModel : class;
         IModelTypeConfigurationBuilder<TModel1, TModel2> Ignore(IEnumerable<string> members);
         IModelTypeConfigurationBuilder<TModel1, TModel2> Ignore(params string[] members);
         IModelTypeConfigurationBuilder<TModel1, TModel2> Ignore(Expression<Func<TModel2, object>> predicate);

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using Artnix.MapperFramework.Extensions;
 
 namespace Artnix.MapperFramework.Providers
@@ -10,13 +8,22 @@ namespace Artnix.MapperFramework.Providers
     internal static class CasheDataReaderProvider<TModel>
         where TModel : class, new()
     {
-        private static Func<IDataRecord, TModel> _funcIDataRecordMapper;
-        private static IReadOnlyDictionary<string, string> _bindings;
-        private static bool _useStandardCodeStyleForMembers;
-
-        public static void SetBindings(IReadOnlyDictionary<string, string> bindings)
+        static CasheDataReaderProvider()
         {
-            _bindings = bindings;
+            _casheConfig = new CasheConfig();
+        }
+
+        private static Func<IDataRecord, TModel> _funcIDataRecordMapper;
+        private static CasheConfig _casheConfig;
+
+        public static void SetBindingsConfiguration(IDictionary<string, string> bindings)
+        {
+            _casheConfig.bindings = bindings;
+        }
+
+        public static void SetBindingsConfiguration(HashSet<string> ignoreMembers)
+        {
+            _casheConfig.ignoreMembers = ignoreMembers;
         }
 
         public static Func<IDataRecord, TModel> GetOrCreateDataReaderToModelMapper(IDataRecord reader)
@@ -24,13 +31,19 @@ namespace Artnix.MapperFramework.Providers
             if (_funcIDataRecordMapper != null)
                 return _funcIDataRecordMapper;
 
-            _funcIDataRecordMapper = reader.Map<TModel>(_bindings, _useStandardCodeStyleForMembers).Compile();
+            _casheConfig.BindingsConfigurations();
+
+            _funcIDataRecordMapper = reader.Map<TModel>(_casheConfig).Compile();
+
+            _casheConfig.Dispose();
+            _casheConfig = null;
+
             return _funcIDataRecordMapper;
         }
 
         internal static void UseStandardCodeStyleForMembers(bool useMode)
         {
-            _useStandardCodeStyleForMembers = useMode;
+            _casheConfig.useStandardCodeStyleForMembers = useMode;
         }
     }
 }

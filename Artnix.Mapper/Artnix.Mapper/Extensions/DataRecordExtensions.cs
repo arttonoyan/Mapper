@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Artnix.MapperFramework.Providers;
 
 namespace Artnix.MapperFramework.Extensions
 {
@@ -26,24 +27,28 @@ namespace Artnix.MapperFramework.Extensions
             return items;
         }
 
-        public static Expression<Func<IDataRecord, TModel>> Map<TModel>(this IDataRecord reader, IReadOnlyDictionary<string, string> bindings, bool useCodingStandartNames)
+        internal static Expression<Func<IDataRecord, TModel>> Map<TModel>(this IDataRecord reader, CasheConfig casheConfig)
             where TModel : class, new()
         {
-            return Map<TModel>(GetPropertyNames<TModel>(reader, bindings, useCodingStandartNames));
+            return Map<TModel>(GetPropertyNames<TModel>(reader, casheConfig));
         }
 
-        private static IReadOnlyDictionary<string, string> GetPropertyNames<TModel>(IDataRecord reader, IReadOnlyDictionary<string, string> bindings, bool useCodingStandartNames)
+        private static IReadOnlyDictionary<string, string> GetPropertyNames<TModel>(IDataRecord reader, CasheConfig casheConfig)
             where TModel : class, new()
         {
             var columnNames = GetUpperCaseColumnNames(reader);
-            Dictionary<string, string> columnNamesDic = useCodingStandartNames ?
+            Dictionary<string, string> columnNamesDic = casheConfig.useStandardCodeStyleForMembers ?
                 columnNames.ToDictionary(p => p.Replace("_", ""), p => p) :
                 columnNames.ToDictionary(p => p, p => p);
 
-            var piDic = typeof(TModel).GetProperties().Where(pi => columnNamesDic.ContainsKey(pi.Name.ToUpper())).ToDictionary(pi => pi.Name, pi => columnNamesDic[pi.Name.ToUpper()]);
-            if (!bindings.IsNullOrEmpty())
+            var properties = casheConfig.ignoreMembers.IsNullOrEmpty()
+                ? typeof(TModel).GetProperties()
+                : typeof(TModel).GetProperties().Where(pi => !casheConfig.ignoreMembers.Contains(pi.Name));
+
+            var piDic = properties.Where(pi => columnNamesDic.ContainsKey(pi.Name.ToUpper())).ToDictionary(pi => pi.Name, pi => columnNamesDic[pi.Name.ToUpper()]);
+            if (!casheConfig.bindings.IsNullOrEmpty())
             {
-                foreach (var b in bindings)
+                foreach (var b in casheConfig.bindings)
                     piDic[b.Key] = b.Value;
             }
 
