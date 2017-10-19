@@ -64,10 +64,9 @@ namespace Artnix.MapperFramework.Extensions
             var parameter = Expression.Parameter(typeof(IDataRecord), "ireader");
 
             var mi = typeof(IDataRecord).GetProperties()
-                .FirstOrDefault(p => p.Name == "Item" && p.GetIndexParameters()[0].ParameterType == typeof(string))
+                .FirstOrDefault(p => p.GetIndexParameters().Any(p1 => p1.ParameterType == typeof(string)))
                 ?.GetMethod;
 
-            MethodInfo dBNullValueMethodInfo = typeof(Check).GetMethods().Single(p => p.Name == nameof(Check.DBNullValue));
             var memberBindings = new List<MemberBinding>();
             foreach (PropertyInfo member in properties)
             {
@@ -79,15 +78,26 @@ namespace Artnix.MapperFramework.Extensions
                 }
 
                 var indexatorExp = Expression.Call(parameter, mi, Expression.Constant(name, typeof(string)));
-                UnaryExpression valueExp;
+
+                Expression valueExp;
                 if (member.PropertyType.IsPrimitive)
                 {
-                    valueExp = Expression.Convert(indexatorExp, member.PropertyType);
+                    MethodInfo asTypeMethodInfo = typeof(Check).GetMethods().Single(p => p.Name == $"As{member.PropertyType.Name}");
+                    valueExp = Expression.Call(asTypeMethodInfo, indexatorExp);
                 }
                 else
                 {
-                    var nullableExp = Expression.Call(dBNullValueMethodInfo, indexatorExp);
-                    valueExp = Expression.Convert(nullableExp, member.PropertyType);
+                    if (Check.Nullable(member.PropertyType))
+                    {
+                        MethodInfo asTypeMethodInfo = typeof(Check).GetMethods().Single(p => p.Name == $"AsNullable{Check.GetUnderlyingType(member.PropertyType).Name}");
+                        valueExp = Expression.Call(asTypeMethodInfo, indexatorExp);
+                    }
+                    else
+                    {
+                        MethodInfo dBNullValueMethodInfo = typeof(Check).GetMethods().Single(p => p.Name == nameof(Check.DBNullValue));
+                        var nullableExp = Expression.Call(dBNullValueMethodInfo, indexatorExp);
+                        valueExp = Expression.Convert(nullableExp, member.PropertyType);
+                    }
                 }
                 memberBindings.Add(Expression.Bind(member, valueExp));
             }
