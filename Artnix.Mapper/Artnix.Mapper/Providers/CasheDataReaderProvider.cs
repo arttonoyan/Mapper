@@ -32,11 +32,9 @@ namespace Artnix.MapperFramework.Providers
                 return _funcIDataRecordMapper;
 
             _casheConfig.BindingsConfigurations();
-
             _funcIDataRecordMapper = reader.Map<TModel>(_casheConfig).Compile();
 
             _casheConfig.Dispose();
-            _casheConfig = null;
 
             return _funcIDataRecordMapper;
         }
