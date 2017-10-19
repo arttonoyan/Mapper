@@ -48,7 +48,7 @@ namespace Artnix.MapperFramework.Builders
             if (!string.IsNullOrEmpty(name))
                 _ignoreMembers.Add(name);
         }
-
+        
         public void Dispose()
         {
             Dispose(true);
@@ -60,9 +60,9 @@ namespace Artnix.MapperFramework.Builders
             if (!disposing)
                 return;
 
-            _ignoreMembers = null;
-            _memberBindings = null;
-            _memberNameBindings = null;
+            _ignoreMembers.Clear();
+            _memberBindings.Clear();
+            _memberNameBindings.Clear();
         }
     }
 }
