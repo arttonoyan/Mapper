@@ -29,6 +29,11 @@ namespace Artnix.MapperFramework
 
         #region ToType
 
+        public static byte ToByte(byte? obj)
+        {
+            return obj ?? 0;
+        }
+
         public static short ToInt16(short? obj)
         {
             return obj ?? 0;
@@ -40,6 +45,26 @@ namespace Artnix.MapperFramework
         }
 
         public static long ToInt64(long? obj)
+        {
+            return obj ?? 0;
+        }
+
+        public static sbyte ToSByte(sbyte? obj)
+        {
+            return obj ?? 0;
+        }
+
+        public static ushort ToUInt16(ushort? obj)
+        {
+            return obj ?? 0;
+        }
+
+        public static uint ToUInt32(uint? obj)
+        {
+            return obj ?? 0;
+        }
+
+        public static ulong ToUInt64(ulong? obj)
         {
             return obj ?? 0;
         }
@@ -68,11 +93,6 @@ namespace Artnix.MapperFramework
 
         #region AsType
 
-        public static byte ToByte(byte? obj)
-        {
-            return obj ?? 0;
-        }
-
         public static bool ToBoolean(bool? obj)
         {
             return obj ?? false;
@@ -94,12 +114,28 @@ namespace Artnix.MapperFramework
             return byte.Parse(obj.ToString());
         }
 
+        public static sbyte AsSByte(object obj)
+        {
+            if (obj == null || obj == DBNull.Value)
+                return 0;
+            
+            return sbyte.Parse(obj.ToString());
+        }
+
         public static short AsInt16(object obj)
         {
             if (obj == null || obj == DBNull.Value)
                 return 0;
 
             return short.Parse(obj.ToString());
+        }
+
+        public static ushort AsUInt16(object obj)
+        {
+            if (obj == null || obj == DBNull.Value)
+                return 0;
+            
+            return ushort.Parse(obj.ToString());
         }
 
         public static int AsInt32(object obj)
@@ -110,6 +146,14 @@ namespace Artnix.MapperFramework
             return int.Parse(obj.ToString());
         }
 
+        public static uint AsUInt32(object obj)
+        {
+            if (obj == null || obj == DBNull.Value)
+                return 0;
+
+            return uint.Parse(obj.ToString());
+        }
+
         public static long AsInt64(object obj)
         {
             if (obj == null || obj == DBNull.Value)
@@ -118,11 +162,19 @@ namespace Artnix.MapperFramework
             return long.Parse(obj.ToString());
         }
 
-        public static decimal AsDecimal(object obj)
+        public static ulong AsUInt64(object obj)
         {
             if (obj == null || obj == DBNull.Value)
                 return 0;
 
+            return ulong.Parse(obj.ToString());
+        }
+
+        public static decimal AsDecimal(object obj)
+        {
+            if (obj == null || obj == DBNull.Value)
+                return 0;
+            
             return decimal.Parse(obj.ToString());
         }
 
@@ -192,6 +244,38 @@ namespace Artnix.MapperFramework
                 return null;
 
             return long.Parse(obj.ToString());
+        }
+
+        public static sbyte? AsNullableSByte(object obj)
+        {
+            if (obj == null || obj == DBNull.Value)
+                return null;
+
+            return sbyte.Parse(obj.ToString());
+        }
+
+        public static ushort? AsNullableUInt16(object obj)
+        {
+            if (obj == null || obj == DBNull.Value)
+                return null;
+            
+            return ushort.Parse(obj.ToString());
+        }
+
+        public static uint? AsNullableUInt32(object obj)
+        {
+            if (obj == null || obj == DBNull.Value)
+                return null;
+
+            return uint.Parse(obj.ToString());
+        }
+
+        public static ulong? AsNullableUInt64(object obj)
+        {
+            if (obj == null || obj == DBNull.Value)
+                return null;
+
+            return ulong.Parse(obj.ToString());
         }
 
         public static decimal? AsNullableDecimal(object obj)

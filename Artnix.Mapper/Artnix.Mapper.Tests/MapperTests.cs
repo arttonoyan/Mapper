@@ -15,7 +15,7 @@ namespace Artnix.MapperFramework.Tests
             Mapper.MapConfiguration(cfg =>
             {
                 cfg.CreateMap<Mock.Models.StudentModel, Mock.DTO.StudentModel>()
-                    .Ignore(nameof(Mock.DTO.StudentModel.Fullname))
+                    //.Ignore(nameof(Mock.DTO.StudentModel.Fullname))
                     .Ignore(m => m.CityName)
 
                      // You can use "IfNotNull" extensions.
