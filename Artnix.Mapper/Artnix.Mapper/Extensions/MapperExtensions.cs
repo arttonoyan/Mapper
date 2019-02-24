@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Artnix.MapperFramework.Extensions
 {
@@ -28,6 +30,11 @@ namespace Artnix.MapperFramework.Extensions
             var ConvertToModel = Mapper.Converter<TModel>(reader);
             while (reader.Read())
                 yield return ConvertToModel(reader);
+        }
+
+        public static Expression<Func<TDestination, bool>> ConvertPredicate<TSource, TDestination>(this Expression<Func<TSource, bool>> predicate)
+        {
+            return Providers.BindingsCasheProvider.ConvertPredicate<TSource, TDestination>(predicate);
         }
     }
 }

@@ -120,7 +120,9 @@ namespace Artnix.MapperFramework.Builders
                     }
                 }
             }
-            
+
+            BindingsCasheProvider.Cashe<TModel1, TModel2>(bindings);
+
             NewExpression model = Expression.New(model2Type);
             MemberInitExpression memberInitExpression = Expression.MemberInit(model, bindings.Values);
 

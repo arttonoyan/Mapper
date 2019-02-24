@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Artnix.MapperFramework.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -61,6 +62,13 @@ namespace Artnix.MapperFramework.Tests
             {
                 Assert.Fail(e.Message);
             }
+        }
+
+        [TestMethod]
+        public void TestConvertPredicate()
+        {
+            Expression<Func<Mock.DTO.StudentModel, bool>> predicate = st => st.Id > 10;
+            var newPredicate = predicate.ConvertPredicate<Mock.DTO.StudentModel, Mock.Models.StudentModel>();
         }
     }
 }
