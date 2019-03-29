@@ -1,3 +1,4 @@
+[![Build status](https://dev.azure.com/art-nix/MapperFramework/_apis/build/status/Build%2C%20Pack%20and%20Push-CI)](https://dev.azure.com/art-nix/MapperFramework/_build/latest?definitionId=2)
 # Features
 MapperFramework is a <a href="https://www.nuget.org/packages/Artnix.MapperFramework/">NuGet library</a> that you can add in to your project.
 
