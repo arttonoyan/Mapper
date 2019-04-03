@@ -1,5 +1,6 @@
 # Artnix.MapperFramework
 [![Build status](https://dev.azure.com/art-nix/MapperFramework/_apis/build/status/Build%2C%20Pack%20and%20Push-CI)](https://dev.azure.com/art-nix/MapperFramework/_build/latest?definitionId=2)
+[![GitHub](https://img.shields.io/github/license/arttonoyan/mapper.svg)](https://github.com/arttonoyan/Mapper/blob/master/LICENSE)
 [![Nuget](https://img.shields.io/nuget/v/Artnix.MapperFramework.svg)](https://www.nuget.org/packages/Artnix.MapperFramework/)
 [![Nuget](https://img.shields.io/nuget/dt/Artnix.MapperFramework.svg)](https://www.nuget.org/packages/Artnix.MapperFramework/)
 
