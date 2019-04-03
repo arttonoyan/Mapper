@@ -5,7 +5,7 @@
 [![Nuget](https://img.shields.io/nuget/dt/Artnix.MapperFramework.svg)](https://www.nuget.org/packages/Artnix.MapperFramework/)
 
 ## How do I get started?
-First, configure MapperFramework to know what types you want to map, in the startup of your application:
+First, configure MapperFramework to know what types you want to map in the startup of your application:
 ```
 Mapper.MapConfiguration(cfg =>
             {
@@ -17,7 +17,7 @@ Mapper.MapConfiguration(cfg =>
             });
 ```
             
-Yoc can use "Ignore" functions:
+You can use "Ignore" functions:
 ```
 Mapper.MapConfiguration(cfg =>
             {
